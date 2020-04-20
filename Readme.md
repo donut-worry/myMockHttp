@@ -11,13 +11,13 @@ Sample project to implement test classes that make REST requests and process res
 ## Develop Java Classes / Methods to be able to do these
 - [x] HTTP GET using Aache HTTP Client
 - [x] Parse JSON response -- using Jackson
-- [ ] Add Authentication to the requests (Digest / Basic)
+- [x] Add Basi Authentication to the requests
 - [ ] Construct JSON payload (for POST) -- using Jackson
 - [ ] Parse multipart Response from the server
 - [ ] Add support for POST
 - [ ] Add Support for PUT
 - [ ] Add Support for Delete
-- [ ] Add SSL support (HTTPS)
+- [x] Add SSL support (HTTPS)
 - [ ] Add Concurrency (min, max users)
 - [ ] Write tests that can be executed via TestNG
  
