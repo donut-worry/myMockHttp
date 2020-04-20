@@ -5,7 +5,7 @@ package myhttp;
 import java.util.*;
 import com.fasterxml.jackson.annotation.*;
 
-public class StatusProperties {
+public class ForestStatusProperties {
     private Availability state;
     private Enabled enabled;
     private Availability availability;

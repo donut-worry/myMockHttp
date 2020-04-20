@@ -1,15 +1,15 @@
-// ForestStatus.java
+// DatabaseStatus.java
 
 package myhttp;
 
 import com.fasterxml.jackson.annotation.*;
 
-public class ForestStatus {
+public class DatabaseStatus {
     private String id;
     private String name;
     private Meta meta;
     private Relations relations;
-    private ForestStatusProperties forestStatusProperties;
+    private DatabaseStatusProperties statusProperties;
     private RelatedViews relatedViews;
 
     @JsonProperty("id")
@@ -33,9 +33,9 @@ public class ForestStatus {
     public void setRelations(Relations value) { this.relations = value; }
 
     @JsonProperty("status-properties")
-    public ForestStatusProperties getForestStatusProperties() { return forestStatusProperties; }
+    public DatabaseStatusProperties getStatusProperties() { return statusProperties; }
     @JsonProperty("status-properties")
-    public void setForestStatusProperties(ForestStatusProperties value) { this.forestStatusProperties = value; }
+    public void setStatusProperties(DatabaseStatusProperties value) { this.statusProperties = value; }
 
     @JsonProperty("related-views")
     public RelatedViews getRelatedViews() { return relatedViews; }
