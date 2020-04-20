@@ -2,6 +2,8 @@ package myhttp;
 
 import com.fasterxml.jackson.annotation.*;
 
+import java.util.Map;
+
 public class DatabaseStatusProperties {
     private CpfEnabled enabled;
     private DeviceSpace state;
@@ -24,7 +26,7 @@ public class DatabaseStatusProperties {
     private ElapsedTime minCapacity;
     private LoadProperties loadProperties;
     private RateProperties rateProperties;
-    private DatabaseCacheProperties databaseCacheProperties;
+    private Map<String, ElapsedTime> cacheProperties;
     private LocalDiskFailover localDiskFailover;
     private DatabaseReplicationStatus databaseReplicationStatus;
     private SharedDiskFailover sharedDiskFailover;
@@ -137,9 +139,9 @@ public class DatabaseStatusProperties {
     public void setRateProperties(RateProperties value) { this.rateProperties = value; }
 
     @JsonProperty("cache-properties")
-    public DatabaseCacheProperties getDatabaseCacheProperties() { return databaseCacheProperties; }
+    public Map<String, ElapsedTime> getCacheProperties() { return cacheProperties; }
     @JsonProperty("cache-properties")
-    public void setDatabaseCacheProperties(DatabaseCacheProperties value) { this.databaseCacheProperties = value; }
+    public void setCacheProperties(Map<String, ElapsedTime> value) { this.cacheProperties = value; }
 
     @JsonProperty("local-disk-failover")
     public LocalDiskFailover getLocalDiskFailover() { return localDiskFailover; }

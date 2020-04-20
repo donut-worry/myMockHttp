@@ -12,7 +12,7 @@ Sample project to implement test classes that make REST requests and process res
 - [x] HTTP GET using Aache HTTP Client
 - [x] Parse JSON response -- using Jackson
 - [x] Add Basi Authentication to the requests
-- [ ] Construct JSON payload (for POST) -- using Jackson
+- [x] Construct JSON payload (for POST) -- using Jackson
 - [ ] Parse multipart Response from the server
 - [x] Add support for POST
 - [x] Add Support for PUT
@@ -24,4 +24,4 @@ Sample project to implement test classes that make REST requests and process res
 ## Test with these APIS
 * Management APIs : [http://docs.marklogic.com/REST/management]
 * Document Management APIS : [http://docs.marklogic.com/REST/client/management]
-* Search APIs : [http://docs.marklogic.com/REST/client/search]
+

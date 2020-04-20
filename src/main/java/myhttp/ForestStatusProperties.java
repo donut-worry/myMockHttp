@@ -28,6 +28,7 @@ public class ForestStatusProperties {
     private ElapsedTime journalsSize;
     private ElapsedTime largeDataSize;
     private ElapsedTime orphanedBinaries;
+    private Stand[] stand;
     private ElapsedTime forestReserve;
     private Enabled rebalancing;
     private Enabled reindexing;
@@ -218,6 +219,11 @@ public class ForestStatusProperties {
     public ElapsedTime getOrphanedBinaries() { return orphanedBinaries; }
     @JsonProperty("orphaned-binaries")
     public void setOrphanedBinaries(ElapsedTime value) { this.orphanedBinaries = value; }
+
+    @JsonProperty("stand")
+    public Stand[] getStand() { return stand; }
+    @JsonProperty("stand")
+    public void setStand(Stand[] value) { this.stand = value; }
 
     @JsonProperty("forest-reserve")
     public ElapsedTime getForestReserve() { return forestReserve; }
@@ -619,3 +625,4 @@ public class ForestStatusProperties {
     @JsonProperty("retired")
     public void setRetired(Enabled value) { this.retired = value; }
 }
+

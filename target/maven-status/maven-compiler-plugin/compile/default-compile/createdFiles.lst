@@ -17,6 +17,7 @@ myhttp/CpfEnabled.class
 myhttp/MyHTTPRequest.class
 myhttp/DatabaseReplicationStatus.class
 myhttp/Units$1.class
+myhttp/Stand.class
 myhttp/Units.class
 myhttp/RelationGroup.class
 myhttp/ForestStatusProperties.class
@@ -29,10 +30,13 @@ myhttp/Enabled.class
 myhttp/HTTPDriver.class
 myhttp/DatabaseCacheProperties.class
 myhttp/ResponseDatabaseStatus.class
+myhttp/SampleDocument.class
 myhttp/DeviceSpace.class
 myhttp/DatabaseCounts.class
 myhttp/Welcome.class
 myhttp/Converter.class
+myhttp/PayloadCreateForest.class
+myhttp/PayloadCreateDB.class
 myhttp/ResponseForestStatus.class
 myhttp/JsonResponseData.class
 myhttp/LoadProperties.class

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.*;
 
 public class Relation {
     private String uriref;
+    private String roleref;
     private String idref;
     private String nameref;
 
@@ -14,6 +15,11 @@ public class Relation {
     public String getUriref() { return uriref; }
     @JsonProperty("uriref")
     public void setUriref(String value) { this.uriref = value; }
+
+    @JsonProperty("roleref")
+    public String getRoleref() { return roleref; }
+    @JsonProperty("roleref")
+    public void setRoleref(String value) { this.roleref = value; }
 
     @JsonProperty("idref")
     public String getIdref() { return idref; }
