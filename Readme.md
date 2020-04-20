@@ -14,9 +14,9 @@ Sample project to implement test classes that make REST requests and process res
 - [x] Add Basi Authentication to the requests
 - [ ] Construct JSON payload (for POST) -- using Jackson
 - [ ] Parse multipart Response from the server
-- [ ] Add support for POST
-- [ ] Add Support for PUT
-- [ ] Add Support for Delete
+- [x] Add support for POST
+- [x] Add Support for PUT
+- [x] Add Support for Delete
 - [x] Add SSL support (HTTPS)
 - [ ] Add Concurrency (min, max users)
 - [ ] Write tests that can be executed via TestNG

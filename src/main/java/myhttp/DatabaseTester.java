@@ -1,9 +1,15 @@
 package myhttp;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
 public class DatabaseTester {
     private String serverUrl;
     private final String serverPort = "8002";
     private MyHTTPRequest req;
+    ObjectMapper mapper;
 
     public DatabaseTester(){
         init();
@@ -16,24 +22,44 @@ public class DatabaseTester {
         req = new MyHTTPRequest();
         req.setAuthenticationMethod("Basic");
         req.setUserPass("admin:admin");
+        mapper = new ObjectMapper();
     }
 
     public int createDB(String dbName){
         String endPoint = "/manage/v2/databases";
         String queryString = "format=json";
+        String jsonString = null;
         String url = constructUrl(true,serverUrl,
                 serverPort,endPoint,queryString);
         req.setUrl(url);
-        req.setPayload("{\"database-name\":\"" + dbName + "\"}");
+        PayloadCreateDB payload = new PayloadCreateDB();
+        payload.setDatabaseName(dbName);
+        try {
+            jsonString = mapper.writeValueAsString(payload);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        req.setPayload(jsonString);
         return req.post().responseCode;
     }
+
     public int createForest(String forestName,String dbName){
         String endPoint = "/manage/v2/forests";
         String queryString = "format=json&wait-for-forest-to-mount=true";
+        String jsonString = null;
         String url = constructUrl(true,serverUrl,
                 serverPort,endPoint,queryString);
         req.setUrl(url);
-        req.setPayload("{\"forest-name\":\"" + forestName + "\",\"database\":\"" + dbName + "\"}");
+        PayloadCreateForest payload = new PayloadCreateForest();
+        payload.setForestName(forestName);
+        payload.setDatabase(dbName);
+        try {
+            jsonString = mapper.writeValueAsString(payload);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        req.setPayload(jsonString);
+        //req.setPayload("{\"forest-name\":\"" + forestName + "\",\"database\":\"" + dbName + "\"}");
         return req.post().responseCode;
     }
 
@@ -50,10 +76,19 @@ public class DatabaseTester {
     public int insertDocument(String uri,String dbName){
         String endPoint = "/v1/documents";
         String queryString = "uri=" + uri + "&database=" + dbName;
+        String jsonString = null;
         String url = constructUrl(true,serverUrl,
                 serverPort,endPoint,queryString);
         req.setUrl(url);
-        req.setPayload("{\"test\":\"foo\",\"endpoint\":\"" + endPoint + "\"}");
+        SampleDocument doc = new SampleDocument();
+        doc.setDocName(uri);
+        doc.setCount("100");
+        try {
+            jsonString = mapper.writeValueAsString(doc);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        req.setPayload(jsonString);
         return req.put().responseCode;
     }
 
@@ -72,7 +107,13 @@ public class DatabaseTester {
         String url = constructUrl(true,serverUrl,
                 serverPort,endPoint,queryString);
         req.setUrl(url);
-        return req.get().responseBody;
+        String responseBody = req.get().responseBody;
+        try {
+            ResponseDatabaseCounts dbCounts = mapper.readValue(responseBody, ResponseDatabaseCounts.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responseBody;
     }
 
     public String getDbStatus(String dbName){
@@ -81,7 +122,13 @@ public class DatabaseTester {
         String url = constructUrl(true,serverUrl,
                 serverPort,endPoint,queryString);
         req.setUrl(url);
-        return req.get().responseBody;
+        String responseBody = req.get().responseBody;
+        try {
+            ResponseDatabaseStatus dbCounts = mapper.readValue(responseBody, ResponseDatabaseStatus.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responseBody;
     }
 
     public String getForestStatus(String forestName){
@@ -90,9 +137,22 @@ public class DatabaseTester {
         String url = constructUrl(true,serverUrl,
                 serverPort,endPoint,queryString);
         req.setUrl(url);
-        return req.get().responseBody;
+        String responseBody = req.get().responseBody;
+        try {
+            ResponseForestStatus dbCounts = mapper.readValue(responseBody, ResponseForestStatus.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responseBody;
     }
 
+
+    // Create Jackson ObjectMapper Object
+    //ObjectMapper mapper = new ObjectMapper();
+
+    //JsonResponse obj = mapper.readValue(jsonResponse, JsonResponse.class);
+
+    //System.out.println(obj);
 
     private String constructUrl(Boolean isSSL,
                                 String serverUrl,
