@@ -1,39 +1,43 @@
 package myhttp;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHeaders;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.*;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 public class MyHTTPRequest {
     private String url;
     private String method;
     private String result;
     private String authenticationMethod;
-    private JsonPayload payload;
+    private String payload;
     private String userPass;
+    private CloseableHttpClient httpClient;
+    private CredentialsProvider credentials;
+    private MyHttpResponse httpResponse = new MyHttpResponse();
     public MyHTTPRequest(){
     }
-    public MyHTTPRequest(String url, String method){
+    public MyHTTPRequest(String url, String method, String userPass) {
         this.url = url;
         this.method = method;
-    }
-    public MyHTTPRequest(String url, String method, String user, String password) {
-        this.url = url;
-        this.method = method;
+        this.userPass = userPass;
     }
 
-    public String get(){
-        String res = "";
+    public MyHttpResponse get(){
+        MyHttpResponse res = null;
         try {
             res = get(url);
         } catch (IOException e) {
@@ -41,26 +45,50 @@ public class MyHTTPRequest {
         }
         return res;
     }
-    private String get(String url) throws IOException {
+    public MyHttpResponse post(){
+        MyHttpResponse res = null;
+        try {
+            res = post(url,payload);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public MyHttpResponse put(){
+        MyHttpResponse res = null;
+        try {
+            res = put(url,payload);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public MyHttpResponse delete(){
+        MyHttpResponse res = null;
+        try {
+            res = delete(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+    private MyHttpResponse get(String url) throws IOException {
         HttpGet request = new HttpGet(url);
-
-        CredentialsProvider credentials = new BasicAuth(getUser(userPass),getPass(userPass)).getCreds();
-
-        CloseableHttpClient httpClient = HttpClientBuilder.create()
-                .setDefaultCredentialsProvider(credentials)
-                .build();
+        connectionInit();
         try {
              CloseableHttpResponse response = httpClient.execute(request);
 
              try {
             // 401 if wrong user/password
-            System.out.println(response.getStatusLine().getStatusCode());
+                 httpResponse.responseCode = response.getStatusLine().getStatusCode();
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
                 // return it as a String
-                result = EntityUtils.toString(entity);
-                System.out.println(result);
+                httpResponse.responseBody = EntityUtils.toString(entity);
+                //System.out.println(result);
+            } else {
+                httpResponse.responseBody = "";
             }
              } finally {
                  response.close();
@@ -68,7 +96,91 @@ public class MyHTTPRequest {
         } finally {
             httpClient.close();
         }
-        return result;
+        return httpResponse;
+    }
+
+    private MyHttpResponse post(String url,String payload) throws IOException {
+        String result = "";
+        HttpPost post = new HttpPost(url);
+        CloseableHttpResponse response;
+        connectionInit();
+        try {
+            // send a JSON data
+            try {
+                post.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+                post.setEntity(new StringEntity(payload));
+            } catch (UnsupportedEncodingException e) {
+                System.out.println("payload count not be converted to StringEntity : " + payload);
+                e.printStackTrace();
+            }
+            response = httpClient.execute(post);
+            try {
+                httpResponse.responseCode = response.getStatusLine().getStatusCode();
+                httpResponse.responseBody = EntityUtils.toString(response.getEntity());
+
+            } finally {
+                response.close();
+            }
+        } finally { httpClient.close(); }
+        return httpResponse;
+    }
+
+    private MyHttpResponse put(String url,String payload) throws IOException {
+        String result = "";
+        HttpPut put = new HttpPut(url);
+        CloseableHttpResponse response;
+        connectionInit();
+        try {
+            // send a data (as text)
+            try {
+                put.setEntity(new StringEntity(payload));
+            } catch (UnsupportedEncodingException e) {
+                System.out.println("payload count not be converted to StringEntity : " + payload);
+                e.printStackTrace();
+            }
+            response = httpClient.execute(put);
+            try {
+                httpResponse.responseCode = response.getStatusLine().getStatusCode();
+                httpResponse.responseBody = EntityUtils.toString(response.getEntity());
+
+            } finally {
+                response.close();
+            }
+        } finally { httpClient.close(); }
+        return httpResponse;
+    }
+
+    private MyHttpResponse delete(String url) throws IOException {
+        HttpDelete request = new HttpDelete(url);
+        connectionInit();
+        try {
+            CloseableHttpResponse response = httpClient.execute(request);
+
+            try {
+                // 401 if wrong user/password
+                httpResponse.responseCode = response.getStatusLine().getStatusCode();
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    // return it as a String
+                    httpResponse.responseBody = EntityUtils.toString(entity);
+                    System.out.println(result);
+                } else {
+                    httpResponse.responseBody = "";
+                }
+            } finally {
+                response.close();
+            }
+        } finally {
+            httpClient.close();
+        }
+        return httpResponse;
+    }
+
+    private void connectionInit(){
+        credentials = new BasicAuth(getUser(userPass),getPass(userPass)).getCreds();
+        httpClient = HttpClientBuilder.create()
+                .setDefaultCredentialsProvider(credentials)
+                .build();
     }
 
     private String getUser(String userPass){
@@ -78,11 +190,11 @@ public class MyHTTPRequest {
         return userPass.split(":")[1];
     }
 
-    public JsonPayload getPayload() {
+    public String getPayload() {
         return payload;
     }
 
-    public void setPayload(JsonPayload payload) {
+    public void setPayload(String payload) {
         this.payload = payload;
     }
 
