@@ -28,12 +28,12 @@ public class TestSetup {
         Assert.assertEquals(createForestResponseCode, 201);
     }
 
-    @AfterTest
-    public void deleteDBForests() {
-        System.out.println("This test deletes forests");
-        int deleteDbResponseCode = tester.deleteDbForest(config.databaseName);
-        //System.out.println("Delete DB Forest Response code :" + deleteDbResponseCode); // 204
-        Assert.assertEquals(deleteDbResponseCode, 204);
-    }
+//    @AfterTest
+//    public void deleteDBForests() {
+//        System.out.println("This test deletes forests");
+//        int deleteDbResponseCode = tester.deleteDbForest(config.databaseName);
+//        //System.out.println("Delete DB Forest Response code :" + deleteDbResponseCode); // 204
+//        Assert.assertEquals(deleteDbResponseCode, 204);
+//    }
 
 }

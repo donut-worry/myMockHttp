@@ -126,7 +126,7 @@ public class DatabaseTester {
         String queryString = "q=" + searchString + "&database=" + dbName + "&format=json";
         String url = constructUrl(serverUrl,
                 serverPort,endPoint,queryString);
-        System.out.println("Search query url : " + url);
+        //System.out.println("Search query url : " + url);
         req.setUrl(url);
         String responseBody = req.get().responseBody;
         try {

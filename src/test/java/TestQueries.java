@@ -12,9 +12,9 @@ public class TestQueries {
     public void queryTest(String searchString, int expectedCnt){
         System.out.println("Running queryTest with searchString : " + searchString + "  expectedCnt : " + expectedCnt);
         ResponseSearch searchResponse = tester.runSearchQuery(searchString,config.databaseName);
-        System.out.println("Search results for search string " +
-                searchString + "  : " + searchResponse.getResults().length +
-                "  expected : " + expectedCnt);
+//        System.out.println("Search results for search string " +
+//                searchString + "  : " + searchResponse.getResults().length +
+//                "  expected : " + expectedCnt);
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {

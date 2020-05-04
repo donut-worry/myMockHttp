@@ -131,7 +131,7 @@ public class MyHTTPRequest {
         CloseableHttpResponse response;
         connectionInit();
         try {
-            // send a data (as text)
+            // send data (as text)
             try {
                 put.setEntity(new StringEntity(payload));
             } catch (UnsupportedEncodingException e) {
@@ -141,7 +141,10 @@ public class MyHTTPRequest {
             response = httpClient.execute(put);
             try {
                 httpResponse.responseCode = response.getStatusLine().getStatusCode();
-                httpResponse.responseBody = EntityUtils.toString(response.getEntity());
+                if(httpResponse.responseCode == 204) // typically while updating existing document
+                    httpResponse.responseBody = "";
+                else
+                    httpResponse.responseBody = EntityUtils.toString(response.getEntity());
 
             } finally {
                 response.close();
