@@ -6,14 +6,14 @@ Sample project to implement test classes that make REST requests and process res
 - [x] Add Maven plugin to IntelliJ
 - [x] Add Maven dependencies - Apache HTTP client, Jackson
 - [x] Create Maven project and create repo with it on Git Hub (this repo)
-- [ ] Install TestNG plugin (or add it as Maven dependency?)
+- [x] Install TestNG plugin (or add it as Maven dependency?)
 
 ## Develop Java Classes / Methods to be able to do these
-- [x] HTTP GET using Aache HTTP Client
+- [x] HTTP GET using Apache HTTP Client
 - [x] Parse JSON response -- using Jackson
 - [x] Add Basi Authentication to the requests
 - [x] Construct JSON payload (for POST) -- using Jackson
-- [ ] Parse multipart Response from the server
+- [ ] ~~Parse multipart Response from the server~~
 - [x] Add support for POST
 - [x] Add Support for PUT
 - [x] Add Support for Delete
