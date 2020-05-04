@@ -36,9 +36,9 @@ public class HTTPDriver {
         System.out.println("Insert document 5 : " + insertDoc5ResponseCode);
 
         // Check db counts
-        String dbCounts1Result = tester.getDbCounts(dbName);
-        System.out.println("DB Counts 1 : ");
-        System.out.println(dbCounts1Result);
+//        String dbCounts1Result = tester.getDbCounts(dbName);
+//        System.out.println("DB Counts 1 : ");
+//        System.out.println(dbCounts1Result);
 
         int deleteDoc2ResponseCode = tester.deleteDocument("/foo2.json",dbName);
         System.out.println("Delete document 2 : " + deleteDoc2ResponseCode);
@@ -46,17 +46,17 @@ public class HTTPDriver {
         System.out.println("Delete document 3 : " + deleteDoc3ResponseCode);
 
         // check db counts
-        String dbCounts2Result = tester.getDbCounts(dbName);
-        System.out.println("DB Counts 2 : ");
-        System.out.println(dbCounts2Result);
-
-        // Check db and forest status
-        String dbStatus1Response = tester.getDbStatus(dbName);
-        System.out.println("Database Status : ");
-        System.out.println(dbStatus1Response);
-        String forestStatus1Response = tester.getForestStatus(forestName);
-        System.out.println("Forest Status : ");
-        System.out.println(forestStatus1Response);
+//        String dbCounts2Result = tester.getDbCounts(dbName);
+//        System.out.println("DB Counts 2 : ");
+//        System.out.println(dbCounts2Result);
+//
+//        // Check db and forest status
+//        String dbStatus1Response = tester.getDbStatus(dbName);
+//        System.out.println("Database Status : ");
+//        System.out.println(dbStatus1Response);
+//        String forestStatus1Response = tester.getForestStatus(forestName);
+//        System.out.println("Forest Status : ");
+//        System.out.println(forestStatus1Response);
 
         try {
             Thread.sleep(30000);

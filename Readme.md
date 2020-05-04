@@ -28,7 +28,7 @@ Sample project to implement test classes that make REST requests and process res
 - [x] Add Support for Delete
 - [x] Add SSL support (HTTPS)
 - [ ] Add Concurrency (min, max users)
-- [ ] Write tests that can be executed via TestNG
+- [x] Write tests that can be executed via TestNG
  
 ## APIS used for testing are from this list
 * Management APIs : [http://docs.marklogic.com/REST/management]

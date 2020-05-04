@@ -3,10 +3,9 @@
 <suite name="DatabaseTests">
     <test verbose="2" preserve-order="true" name="ingestionQueryTests">
         <classes>
-            <class name="TestDatabaseSetup"/>
+            <class name="TestSetup"/>
             <class name="TestIngestion"/>
             <class name="TestQueries"/>
-            <class name="TestDatabaseCleanup"/>
         </classes>
     </test>
 </suite>
