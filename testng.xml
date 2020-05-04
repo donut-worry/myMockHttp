@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="DatabaseTests">
+    <test verbose="2" preserve-order="true" name="ingestionQueryTests">
+        <classes>
+            <class name="TestDatabaseSetup"/>
+            <class name="TestIngestion"/>
+            <class name="TestQueries"/>
+            <class name="TestDatabaseCleanup"/>
+        </classes>
+    </test>
+</suite>

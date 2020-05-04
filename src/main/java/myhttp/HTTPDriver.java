@@ -17,6 +17,12 @@ public class HTTPDriver {
         int createForestResponseCode = tester.createForest(forestName,dbName);
         System.out.println("Create Forest Response code : " + createForestResponseCode);
 
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         // Insert / delete documents
         int insertDoc1ResponseCode = tester.insertDocument("/foo1.json",dbName);
         System.out.println("Insert document 1 : " + insertDoc1ResponseCode);
@@ -35,9 +41,9 @@ public class HTTPDriver {
         System.out.println(dbCounts1Result);
 
         int deleteDoc2ResponseCode = tester.deleteDocument("/foo2.json",dbName);
-        System.out.println("Delete document 2 : " + insertDoc2ResponseCode);
+        System.out.println("Delete document 2 : " + deleteDoc2ResponseCode);
         int deleteDoc3ResponseCode = tester.deleteDocument("/foo3.json",dbName);
-        System.out.println("Delete document 3 : " + insertDoc3ResponseCode);
+        System.out.println("Delete document 3 : " + deleteDoc3ResponseCode);
 
         // check db counts
         String dbCounts2Result = tester.getDbCounts(dbName);
@@ -51,6 +57,12 @@ public class HTTPDriver {
         String forestStatus1Response = tester.getForestStatus(forestName);
         System.out.println("Forest Status : ");
         System.out.println(forestStatus1Response);
+
+        try {
+            Thread.sleep(30000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         // Teardown : delete database and forest
         int deleteForestDbResponseCode = tester.deleteDbForest(dbName);
