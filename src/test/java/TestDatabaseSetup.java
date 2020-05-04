@@ -12,6 +12,9 @@ public class TestDatabaseSetup {
         //int createDbResponseCode = tester.createDB(dbName);
         //System.out.println("Create DB Response code :" + createDbResponseCode);
         System.out.println("This test creates database");
+        TestConfig config = new TestConfig();
+        config.printConfig();
+        //System.out.println(TestConfig.getConfigFilePath());
     }
 
     @BeforeTest(dependsOnMethods = {"createDB"})

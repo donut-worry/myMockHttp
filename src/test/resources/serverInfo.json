@@ -1,0 +1,17 @@
+{
+  "connectionInfo": {
+    "serverUrl" : "localhost",
+    "serverPort" : "8003" ,
+    "isSsl" : "false",
+    "authenticationMethod" : "basic"
+  },
+  "authentication": {
+    "mlUser" : "admin",
+    "mlPasswd" : "admin",
+    "internalUser" : "true"
+  },
+  "dbConfig" : {
+    "databaseName" : "Test-DB",
+    "forestName" : "Test-Forest"
+  }
+}
