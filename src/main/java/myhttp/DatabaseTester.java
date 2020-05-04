@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class DatabaseTester {
     private String serverUrl;
@@ -49,6 +51,7 @@ public class DatabaseTester {
         String jsonString = null;
         String url = constructUrl(serverUrl,
                 serverPort,endPoint,queryString);
+        //System.out.println("url for database create : " + url);
         req.setUrl(url);
         PayloadCreateDB payload = new PayloadCreateDB();
         payload.setDatabaseName(dbName);
@@ -67,6 +70,7 @@ public class DatabaseTester {
         String jsonString = null;
         String url = constructUrl(serverUrl,
                 serverPort,endPoint,queryString);
+        //System.out.println("url for forest create : " + url);
         req.setUrl(url);
         PayloadCreateForest payload = new PayloadCreateForest();
         payload.setForestName(forestName);
@@ -102,6 +106,26 @@ public class DatabaseTester {
         doc.setDocName(uri);
         doc.setCount("100");
         doc.setNote("This is a sample test document");
+        try {
+            jsonString = mapper.writeValueAsString(doc);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        req.setPayload(jsonString);
+        return req.put().responseCode;
+    }
+
+    public int insertDocument(String uri,String dbName, String note){
+        String endPoint = "/v1/documents";
+        String queryString = "uri=" + uri + "&database=" + dbName;
+        String jsonString = null;
+        String url = constructUrl(serverUrl,
+                serverPort,endPoint,queryString);
+        req.setUrl(url);
+        SampleDocument doc = new SampleDocument();
+        doc.setDocName(uri);
+        doc.setCount("100");
+        doc.setNote(note);
         try {
             jsonString = mapper.writeValueAsString(doc);
         } catch (JsonProcessingException e) {
@@ -190,13 +214,6 @@ public class DatabaseTester {
     }
 
 
-    // Create Jackson ObjectMapper Object
-    //ObjectMapper mapper = new ObjectMapper();
-
-    //JsonResponse obj = mapper.readValue(jsonResponse, JsonResponse.class);
-
-    //System.out.println(obj);
-
     private String constructUrl(String serverUrl,
                                 int serverPort,
                                 String endPoint,
@@ -209,7 +226,7 @@ public class DatabaseTester {
         url.append(serverPort);
         url.append(endPoint);
         url.append("?");
-        url.append(queryString);
+        url.append(queryString.replaceAll(" ","+"));
         return url.toString();
     }
 

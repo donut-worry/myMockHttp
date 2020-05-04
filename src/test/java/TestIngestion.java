@@ -6,24 +6,40 @@ public class TestIngestion {
     protected DatabaseTester tester = new DatabaseTester(config.serverUrl, config.serverPort, config.isSsl,
             config.authenticationMethod, config.mlUser, config.mlPasswd);
 
-    @Test(priority=1)
-    public void ingestXML(){
-        int insertDocResponseCode = tester.insertDocument("/fooxml1.json",config.databaseName);
-        System.out.println("Inserted XML document :" + insertDocResponseCode);
-        insertDocResponseCode = tester.insertDocument("/fooxml2.json",config.databaseName);
-        System.out.println("Inserted XML document :" + insertDocResponseCode);
-        insertDocResponseCode = tester.insertDocument("/fooxml3.json",config.databaseName);
-        System.out.println("Inserted XML document :" + insertDocResponseCode);
-        System.out.println("XML files have been ingested");
+    @Test(priority=1, dataProvider = "jsonDefaultDocProvider")
+    public void ingestDefault(String uri){
+        int insertDocResponseCode = tester.insertDocument(uri,config.databaseName);
+        System.out.println("Inserted default document : " + uri);
     }
 
-    @Test(priority=2)
-    public void ingestJSON(){
-        int insertDocResponseCode = tester.insertDocument("/foo1.json",config.databaseName);
-        System.out.println("Inserted JSON document :" + insertDocResponseCode);
-        insertDocResponseCode = tester.insertDocument("/foo2.json",config.databaseName);
-        System.out.println("Inserted JSON document :" + insertDocResponseCode);
-        System.out.println("JSON files have been ingested");
+    @Test(priority=2, dataProvider = "jsonDocProvider")
+    public void ingestJSON(String uri, String note){
+        int insertDocResponseCode = tester.insertDocument(uri,config.databaseName,note);
+        System.out.println("Inserted custom document : " + uri);
+    }
+
+    @DataProvider(name="jsonDocProvider")
+    public Object[][] getJsonDocs(){
+        Object[][] data = {
+                {"/foo1.json","This is a test document"},
+                {"/foo2.json","This is a funny document"},
+                {"/foo3.json","This is a test document"},
+                {"/foo4.json","This is a very funny document"},
+                {"/foo5.json","document is a draft only"}
+        };
+        return data;
+    }
+
+    @DataProvider(name="jsonDefaultDocProvider")
+    public Object[][] getDefaultJsonDocs(){
+        Object[][] data = {
+                {"/defaultFoo1.json"}, // default note : "This is a sample test document"
+                {"/defaultFoo2.json"},
+                {"/defaultFoo3.json"},
+                {"/defaultFoo4.json"},
+                {"/defaultFoo5.json"}
+        };
+        return data;
     }
 
 }
