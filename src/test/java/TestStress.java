@@ -26,7 +26,7 @@ public class TestStress {
         ExecutorService executor = Executors.newFixedThreadPool(config.maxUsers);
         try{
             for(int i=0; i < config.maxTasks; i++){
-                System.out.println("Spawning task # " + i+1);
+                System.out.println("Spawning task # " + i);
                 DatabaseStressTester tester = tests[i % tests.length];
                 tester.setNumUpdates(noOfUpdates);
                 tester.setQueries(queries);

@@ -12,7 +12,7 @@ public class DatabaseStressUpdateTester extends DatabaseStressTester {
 
     @Override
     public void run() {
-        System.out.println("Running " + numUpdates + "updates from thread : " + Thread.currentThread().getName());
+        System.out.println("Running " + numUpdates + " updates from thread : " + Thread.currentThread().getName());
         for(int i=0; i < numUpdates; i++){
             //System.out.println("i = " + i + "  | numUpdates = " + numUpdates);
            String uri = "/" + TimestampGenerator.getCurrentTimestamp() + "/" + i + ".json";
