@@ -30,12 +30,12 @@ public class TestSetup {
         Assert.assertTrue((createForestResponseCode == 201 || createForestResponseCode == 204), "Create forest failed with return code " + createForestResponseCode);
     }
 
-//    @AfterSuite
-//    public void deleteDBForests() {
-//        System.out.println("This test deletes forests");
-//        int deleteDbResponseCode = tester.deleteDbForest(config.databaseName);
-//        //System.out.println("Delete DB Forest Response code :" + deleteDbResponseCode); // 204
-//        Assert.assertEquals(deleteDbResponseCode, 204);
-//    }
+    @AfterSuite
+    public void deleteDBForests() {
+        System.out.println("This test deletes forests");
+        int deleteDbResponseCode = tester.deleteDbForest(config.databaseName);
+        //System.out.println("Delete DB Forest Response code :" + deleteDbResponseCode); // 204
+        Assert.assertEquals(deleteDbResponseCode, 204);
+    }
 
 }
