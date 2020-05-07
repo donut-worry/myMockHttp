@@ -1,6 +1,6 @@
 {
   "connectionInfo": {
-    "serverUrl" : "localhost",
+    "serverUrl" : "ec2-54-149-156-88.us-west-2.compute.amazonaws.com",
     "serverPort" : "8003" ,
     "isSsl" : "false",
     "authenticationMethod" : "basic"
