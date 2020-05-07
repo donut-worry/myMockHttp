@@ -5,8 +5,7 @@ import org.testng.annotations.*;
 
 public class TestQueries {
     protected TestConfig config = new TestConfig();
-    protected DatabaseTester tester = new DatabaseTester(config.serverUrl, config.serverPort, config.isSsl,
-            config.authenticationMethod, config.mlUser, config.mlPasswd);
+    protected DatabaseTester tester = new DatabaseTester(config.getTestdata());
 
 
     @Test(dataProvider = "searchStrings")

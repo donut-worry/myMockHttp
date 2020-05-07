@@ -1,4 +1,4 @@
-import myHttpTester.*;
+import myhttp.*;
 
 import java.io.File;
 
@@ -15,6 +15,8 @@ public class TestConfig {
     public boolean internalUser;
     public String databaseName;
     public String forestName;
+    public int maxUsers;
+    public int maxTasks;
 
     public TestConfig(){
         this.configFilePath = getConfigFilePath();
@@ -28,6 +30,7 @@ public class TestConfig {
         ConnectionInfo connectioninfo = testdata.getConnectionInfo();
         Authentication authn = testdata.getAuthentication();
         DBConfig dbConfig = testdata.getDBConfig();
+        StressConfig stressConfig = testdata.getStressConfig();
         this.serverUrl = connectioninfo.getServerURL();
         this.serverPort = Integer.parseInt(connectioninfo.getServerPort());
         this.isSsl = Boolean.parseBoolean(connectioninfo.getIsSSL());
@@ -37,6 +40,8 @@ public class TestConfig {
         this.internalUser = Boolean.parseBoolean(authn.getInternalUser());
         this.databaseName = dbConfig.getDatabaseName();
         this.forestName = dbConfig.getForestName();
+        this.maxUsers = Integer.parseInt(stressConfig.getMaxUsers());
+        this.maxTasks = Integer.parseInt(stressConfig.getMaxTasks());
     }
 
     public void printConfig(){
@@ -50,6 +55,12 @@ public class TestConfig {
         System.out.println("internalUser : " + internalUser);
         System.out.println("databaseName : " + databaseName);
         System.out.println("forestName : " + forestName);
+        System.out.println("maxUsers : " + maxUsers);
+        System.out.println("maxTasks : " + maxTasks);
+    }
+
+    public TestData getTestdata(){
+        return testdata;
     }
 
     public String getConfigFilePath(){

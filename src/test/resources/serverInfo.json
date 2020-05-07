@@ -1,6 +1,6 @@
 {
   "connectionInfo": {
-    "serverUrl" : "ec2-54-149-156-88.us-west-2.compute.amazonaws.com",
+    "serverUrl" : "localhost",
     "serverPort" : "8003" ,
     "isSsl" : "false",
     "authenticationMethod" : "basic"
@@ -13,5 +13,9 @@
   "dbConfig" : {
     "databaseName" : "Test-DB",
     "forestName" : "Test-Forest"
+  },
+  "stressConfig" : {
+    "maxUsers": "2",
+    "maxTasks": "10"
   }
 }

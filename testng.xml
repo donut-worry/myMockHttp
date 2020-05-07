@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="DatabaseTests">
-    <test verbose="2" preserve-order="true" name="ingestionQueryTests">
+<!--
+    <test verbose="2" preserve-order="true" name="functionalTests">
         <classes>
             <class name="TestSetup"/>
             <class name="TestIngestion"/>
             <class name="TestQueries"/>
+        </classes>
+    </test>
+    -->
+
+    <test verbose="2" preserve-order="true" name="stressTests">
+        <classes>
+            <class name="TestSetup"/>
+            <class name="TestStress"/>
+            <!-- <class name="StressTestDebugger"/> -->
         </classes>
     </test>
 </suite>

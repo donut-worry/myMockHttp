@@ -3,13 +3,12 @@ import org.testng.annotations.*;
 
 public class TestIngestion {
     protected TestConfig config = new TestConfig();
-    protected DatabaseTester tester = new DatabaseTester(config.serverUrl, config.serverPort, config.isSsl,
-            config.authenticationMethod, config.mlUser, config.mlPasswd);
+    protected DatabaseTester tester = new DatabaseTester(config.getTestdata());
 
     @Test(priority=1, dataProvider = "jsonDefaultDocProvider")
     public void ingestDefault(String uri){
         int insertDocResponseCode = tester.insertDocument(uri,config.databaseName);
-        System.out.println("Inserted default document : " + uri);
+        System.out.println("Inserted default document : " + uri + " | Response code : " + insertDocResponseCode);
     }
 
     @Test(priority=2, dataProvider = "jsonDocProvider")

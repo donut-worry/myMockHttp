@@ -7,12 +7,14 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
@@ -25,6 +27,7 @@ public class MyHTTPRequest {
     private String authenticationMethod;
     private String payload;
     private String userPass;
+    //private PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
     private CloseableHttpClient httpClient;
     private CredentialsProvider credentials;
     private MyHttpResponse httpResponse = new MyHttpResponse();
@@ -180,9 +183,14 @@ public class MyHTTPRequest {
     }
 
     private void connectionInit(){
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(30000)
+                .setConnectionRequestTimeout(30000)
+                .setSocketTimeout(30000).build();
         credentials = new BasicAuth(getUser(userPass),getPass(userPass)).getCreds();
         httpClient = HttpClientBuilder.create()
                 .setDefaultCredentialsProvider(credentials)
+                .setDefaultRequestConfig(requestConfig)
                 .build();
     }
 

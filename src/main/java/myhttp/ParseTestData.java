@@ -1,4 +1,4 @@
-package myHttpTester;
+package myhttp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

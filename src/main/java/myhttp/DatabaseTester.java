@@ -4,16 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
-public class DatabaseTester {
+public class DatabaseTester extends Thread {
+    private TestData testdata;
     private String serverUrl;
     private int serverPort;
     private boolean isSsl;
     private String authenticationMethod;
     private String user;
     private String passwd;
+    private String mlUser;
+    private String mlPasswd;
+    private boolean internalUser;
+
     //private final String serverPort = "8002";
     private MyHTTPRequest req;
     ObjectMapper mapper;
@@ -35,6 +38,19 @@ public class DatabaseTester {
         this.authenticationMethod = authMethod;
         this.user = user;
         this.passwd = passwd;
+        init();
+    }
+
+    public DatabaseTester(TestData testdata){
+        ConnectionInfo connectioninfo = testdata.getConnectionInfo();
+        Authentication authn = testdata.getAuthentication();
+        this.serverUrl = connectioninfo.getServerURL();
+        this.serverPort = Integer.parseInt(connectioninfo.getServerPort());
+        this.isSsl = Boolean.parseBoolean(connectioninfo.getIsSSL());
+        this.authenticationMethod = connectioninfo.getAuthenticationMethod();
+        this.user = authn.getMlUser();
+        this.passwd = authn.getMlPasswd();
+        this.internalUser = Boolean.parseBoolean(authn.getInternalUser());
         init();
     }
 
@@ -122,6 +138,7 @@ public class DatabaseTester {
         String url = constructUrl(serverUrl,
                 serverPort,endPoint,queryString);
         req.setUrl(url);
+        //System.out.println("Inserting document with URI : " + uri);
         SampleDocument doc = new SampleDocument();
         doc.setDocName(uri);
         doc.setCount("100");
@@ -152,7 +169,9 @@ public class DatabaseTester {
                 serverPort,endPoint,queryString);
         //System.out.println("Search query url : " + url);
         req.setUrl(url);
-        String responseBody = req.get().responseBody;
+        var response = req.get();
+        String responseBody = response.responseBody;
+        //System.out.println("GET response code : " + response.responseCode);
         try {
             searchResponse = mapper.readValue(responseBody, ResponseSearch.class);
         } catch (IOException e) {

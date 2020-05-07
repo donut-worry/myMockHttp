@@ -1,7 +1,6 @@
 // Authentication.java
-package myHttpTester;
+package myhttp;
 
-import java.util.*;
 import com.fasterxml.jackson.annotation.*;
 
 public class Authentication {
